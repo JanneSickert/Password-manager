@@ -12,7 +12,7 @@ import java.sql.SQLException;
  */
 public class Insert {
 	
-	private static void writeInKeys(int kid, String username, String passwort, int mid, String web) {
+	public static void writeInKeys(int kid, String username, String passwort, int mid, String web) {
 		Connection con = DbConnector.connect();
 		PreparedStatement ps = null;
 		try {

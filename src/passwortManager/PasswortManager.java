@@ -59,10 +59,21 @@ public class PasswortManager {
 	}
 	
 	private static void erweiterteOptionen() {
-		int nr = Integer.parseInt(faq("Write 0 to delete all Data"));
+		int nr = Integer.parseInt(faq(" Write 0 to delete all data"
+							      + "\n Write 1 to export data"
+							      + "\n Write 2 to import data, this will overwrite the current entrys"));
+		String masterPasswort;
 		switch (nr) {
 		case 0:
 			Delete.deleteAll();
+			break;
+		case 1:
+			masterPasswort = faq("master password");
+			XmlParser.export(masterPasswort);
+			break;
+		case 2:
+			masterPasswort = faq("new master password");
+			XmlParser.inport(masterPasswort);
 			break;
 		default:
 			p(UNK);

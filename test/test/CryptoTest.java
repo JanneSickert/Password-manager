@@ -1,5 +1,7 @@
 package test;
 
+import passwortManager.XmlParser;
+
 public class CryptoTest {
 	
 	private static void p(String str) {
@@ -7,6 +9,7 @@ public class CryptoTest {
 	}
 	
 	public static void main(String[] args) {
+		final int START_TEST = 2;
 		Test[] tests = new Test[] {
 			new Test() {
 				@Override
@@ -18,10 +21,23 @@ public class CryptoTest {
 					p(decrypted);
 					return (text.equals(decrypted));
 				}
-			}	
+			},
+			new Test() {
+				@Override
+				public boolean test() {
+					XmlParser.export("myKey");
+					return true;
+				}
+			},
+			new Test() {
+				@Override
+				public boolean test() {
+					XmlParser.inport("myKey");
+					return true;
+				}
+			}
 		};
-		
-		for (int i = 0; i < tests.length; i++) {
+		for (int i = START_TEST; i < tests.length; i++) {
 			if (tests[i].test()) {
 				p("Test " + i + " complete.");
 			} else {

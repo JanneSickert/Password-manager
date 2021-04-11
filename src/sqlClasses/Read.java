@@ -5,14 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * 
- * @version 1.4
- * @author Janne
- *
- */
 public class Read {
-	
+
 	/**
 	 * 
 	 * @param masterPasswort
@@ -84,7 +78,7 @@ public class Read {
 		}
 		return webPageNames;
 	}
-	
+
 	public static String[] getData(int primaryId, String masterPasswort) {
 		String[] data = new String[4];
 		Connection con = DbConnector.connect();
@@ -112,5 +106,69 @@ public class Read {
 		}
 		data[2] = enAndDecryption.MainPort.decrypt(data[2], masterPasswort);
 		return data;
+	}
+
+	public static String[][] readTableKeys(String masterPasswort) {
+		int size = GetNrOfEntries.getNrOfEntrys("Keys");
+		String[][] table = new String[size][5];
+		for (int line = 0; line < size; line++) {
+			Connection con = DbConnector.connect();
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			try {
+				String sql = "SELECT * FROM Keys WHERE Kid = ? ";
+				ps = con.prepareStatement(sql);
+				ps.setInt(1, line + 1);
+				rs = ps.executeQuery();
+				table[line][0] = "" + (line + 1);
+				table[line][1] = rs.getString("Username");
+				table[line][2] = rs.getString("Passwort");
+				table[line][3] = "" + rs.getInt("Mid");
+				table[line][4] = rs.getString("Web");
+				table[line][2] = enAndDecryption.MainPort.decrypt(table[line][2], masterPasswort);
+			} catch (SQLException e) {
+				System.out.println(e.toString());
+			} finally {
+				try {// close connection
+					rs.close();
+					ps.close();
+					con.close();
+				} catch (SQLException e) {
+					System.out.println(e.toString());
+				}
+			}
+		}
+		return table;
+	}
+	
+	public static String[][] readTableMails(String masterPasswort) {
+		int size = GetNrOfEntries.getNrOfEntrys("Mails");
+		String[][] table = new String[size][3];
+		for (int line = 0; line < size; line++) {
+			Connection con = DbConnector.connect();
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			try {
+				String sql = "SELECT * FROM Mails WHERE Mid = ? ";
+				ps = con.prepareStatement(sql);
+				ps.setInt(1, line + 1);
+				rs = ps.executeQuery();
+				table[line][0] = "" + (line + 1);
+				table[line][1] = rs.getString("Mail");
+				table[line][2] = rs.getString("Passwort");
+				table[line][2] = enAndDecryption.MainPort.decrypt(table[line][2], masterPasswort);
+			} catch (SQLException e) {
+				System.out.println(e.toString());
+			} finally {
+				try {// close connection
+					rs.close();
+					ps.close();
+					con.close();
+				} catch (SQLException e) {
+					System.out.println(e.toString());
+				}
+			}
+		}
+		return table;
 	}
 }
