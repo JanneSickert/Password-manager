@@ -9,8 +9,23 @@ public class CryptoTest {
 	}
 	
 	public static void main(String[] args) {
+		p("START_TEST");
 		final int START_TEST = 2;
 		Test[] tests = new Test[] {
+				new Test() {
+					@Override
+					public boolean test() {
+						XmlParser.export("myKey");
+						return true;
+					}
+				},
+				new Test() {
+					@Override
+					public boolean test() {
+						XmlParser.inport("myKey");
+						return true;
+					}
+				},
 			new Test() {
 				@Override
 				public boolean test() {
@@ -25,15 +40,48 @@ public class CryptoTest {
 			new Test() {
 				@Override
 				public boolean test() {
-					XmlParser.export("myKey");
-					return true;
+					enAndDecryption.primeNumbers.Port pr = new enAndDecryption.primeNumbers.Port();
+					String text = "MySecondCryptedText";
+					String key = "MyMasKey";
+					char[] ctext = new char[text.length()];
+					for (int i = 0; i < text.length(); i++) {
+						ctext[i] = text.charAt(i);
+					}
+					char[] ckey = new char[key.length()];
+					for (int i = 0; i < key.length(); i++) {
+						ckey[i] = key.charAt(i);
+					}
+					char[] en = pr.encrypt(ctext, ckey);
+					System.out.println("Encrypted text: " + new String(en));
+					char[] de = pr.decrypt(en, ckey);
+					System.out.println("Decrypted text: " + new String(de));
+					return (new String(de).equals(text));
 				}
 			},
 			new Test() {
 				@Override
 				public boolean test() {
-					XmlParser.inport("myKey");
-					return true;
+					enAndDecryption.primeNumbers.Port pr = new enAndDecryption.primeNumbers.Port();
+					String text = "MySecondCryptedText";
+					String key = "MyMasKey";
+					char[] ctext = new char[text.length()];
+					for (int i = 0; i < text.length(); i++) {
+						ctext[i] = text.charAt(i);
+					}
+					char[] ckey = new char[key.length()];
+					for (int i = 0; i < key.length(); i++) {
+						ckey[i] = key.charAt(i);
+					}
+					char[] en = pr.encrypt(ctext, ckey);
+					System.out.println("Encrypted text: " + new String(en));
+					key = "wrongPass";
+					ckey = new char[key.length()];
+					for (int i = 0; i < key.length(); i++) {
+						ckey[i] = key.charAt(i);
+					}
+					char[] de = pr.decrypt(en, ckey);
+					System.out.println("Decrypted text: " + new String(de));
+					return (!(new String(de).equals(text)));
 				}
 			}
 		};

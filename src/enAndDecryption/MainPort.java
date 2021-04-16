@@ -3,7 +3,8 @@ package enAndDecryption;
 public class MainPort{
 
 	private static final CryptoInterface[] ci = {
-			new enAndDecryption.sinus.Port()
+			new enAndDecryption.sinus.Port(),
+			new enAndDecryption.primeNumbers.Port()
 	};
 	
 	private static final int LENGTH = ci.length;
