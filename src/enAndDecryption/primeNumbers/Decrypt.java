@@ -9,7 +9,7 @@ class Decrypt extends Crypto{
 		int sum = ia - ib;
 		char erg;
 		if (sum < 0) {
-			sum = MAX_CHAR_INDEX + sum;
+			sum = FindPrimes.MAX_CHAR_INDEX + sum;
 			erg = (char) sum;
 		} else {
 			erg = (char) sum;

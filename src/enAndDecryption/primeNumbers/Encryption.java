@@ -8,8 +8,8 @@ class Encryption extends Crypto {
 		int ib = (int) b;
 		int sum = ia + ib;
 		char erg;
-		if (sum > MAX_CHAR_INDEX) {
-			sum = sum - MAX_CHAR_INDEX;
+		if (sum > FindPrimes.MAX_CHAR_INDEX) {
+			sum = sum - FindPrimes.MAX_CHAR_INDEX;
 			erg = (char) sum;
 		} else {
 			erg = (char) sum;

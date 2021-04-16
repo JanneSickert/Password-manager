@@ -84,13 +84,24 @@ public class Insert {
 		}
 	}
 	
+	private static String getRandomString() {
+		char a = (char) Math.round(Math.random() * enAndDecryption.primeNumbers.FindPrimes.MAX_CHAR_INDEX);
+		char b = (char) Math.round(Math.random() * enAndDecryption.primeNumbers.FindPrimes.MAX_CHAR_INDEX);
+		return (new String(
+				new char[] {
+						a, b
+				}
+				));
+	}
+	
 	public static void write(String username, String passwort, String mail, String web, String masterPasswort) {
+		String randomString = getRandomString();
 		int len = GetNrOfEntries.getNrOfEntrys("Keys");
 		int kid = len + 1;
 		String cry_passwort = enAndDecryption.MainPort.encrypt(passwort, masterPasswort);
 		String[] storedMails = getAllMails();
 		if (storedMails == null) {
-			writeInMails(1, mail, "null");
+			writeInMails(1, mail, randomString);
 			writeInKeys(1, username, cry_passwort, 1, web);
 		} else {
 			boolean mailVorhanden = false;
@@ -103,7 +114,7 @@ public class Insert {
 			}
 			if (!mailVorhanden) {
 				int id = GetNrOfEntries.getNrOfEntrys("Mails") + 1;
-				writeInMails(id, mail, "null");
+				writeInMails(id, mail, randomString);
 				writeInKeys(kid, username, cry_passwort, id, web);
 			}
 		}

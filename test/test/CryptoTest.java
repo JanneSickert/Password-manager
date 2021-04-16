@@ -85,6 +85,8 @@ public class CryptoTest {
 				}
 			}
 		};
+		p("Prime numbers are calculated. This could take a couple of seconds");
+		enAndDecryption.primeNumbers.FindPrimes.startFindPrimes();
 		for (int i = START_TEST; i < tests.length; i++) {
 			if (tests[i].test()) {
 				p("Test " + i + " complete.");
