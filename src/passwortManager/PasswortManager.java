@@ -7,6 +7,7 @@ public class PasswortManager {
 
 	private static final Scanner sc = new Scanner(System.in);
 	private static final String UNK = "undefind input!";
+	private static PasswordInput passwordInput = new PasswordInput();
 
 	private static void p(String str) {
 		System.out.println(str);
@@ -70,11 +71,11 @@ public class PasswortManager {
 			Delete.deleteAll();
 			break;
 		case 1:
-			masterPasswort = faq("master password");
+			masterPasswort = passwordInput.askPassword();
 			XmlParser.export(masterPasswort);
 			break;
 		case 2:
-			masterPasswort = faq("new master password");
+			masterPasswort = passwordInput.askPassword();
 			XmlParser.inport(masterPasswort);
 			break;
 		default:
@@ -88,7 +89,7 @@ public class PasswortManager {
 	}
 
 	private static void readMailData() {
-		String masterPasswort = faq("master password");
+		String masterPasswort = passwordInput.askPassword();
 		String[][] mailData = Read.getMailData(masterPasswort);
 		for (int i = 0; i < mailData.length; i++) {
 			p("Mid:" + (i + 1) + " mail:" + mailData[i][0] + " password:" + mailData[i][1]);
@@ -114,7 +115,7 @@ public class PasswortManager {
 				Update.update(ENTITETEN[snr], pid, newEntry, null);
 				break;
 			case 1:
-				masterPasswort = faq("master password");
+				masterPasswort = passwordInput.askPassword();
 				Update.update(ENTITETEN[snr], pid, newEntry, masterPasswort);
 				break;
 			case 2:
@@ -126,8 +127,8 @@ public class PasswortManager {
 			break;
 		case 1:
 			int mid = (int) Integer.parseInt(faq("primary-id of the mail"));
-			String newPasswort = faq("new password");
-			masterPasswort = faq("master password");
+			String newPasswort = passwordInput.askPassword();
+			masterPasswort = passwordInput.askPassword();
 			Update.updateMailPasswort(mid, newPasswort, masterPasswort);
 			break;
 		}
@@ -145,11 +146,11 @@ public class PasswortManager {
 			passwort = faq("password");
 			mail = faq("mail");
 			web = faq("name of the website");
-			masterPasswort = faq("master password");
+			masterPasswort = passwordInput.askPassword();
 			Insert.write(username, passwort, mail, web, masterPasswort);
 			break;
 		case 1:
-			String m_mail = faq("mail"), m_passwort = faq("password"), m_masterPasswort = faq("master password");
+			String m_mail = faq("mail"), m_passwort = faq("password"), m_masterPasswort = passwordInput.askPassword();
 			Insert.addNewMail(m_mail, m_passwort, m_masterPasswort);
 			break;
 		default:
@@ -165,7 +166,7 @@ public class PasswortManager {
 			p("" + i + ":" + webPageNames[i]);
 		}
 		int nr = (int) Integer.parseInt(faq("Nr"));
-		String masterPasswort = faq("master password");
+		String masterPasswort = passwordInput.askPassword();
 		final String[] NAMES = { "website", "username", "password", "mail address" };
 		String[] data = Read.getData(nr + 1, masterPasswort);
 		for (int k = 0; k < 4; k++) {
