@@ -2,9 +2,10 @@ package enAndDecryption;
 
 public class MainPort{
 
-	private static final CryptoInterface[] ci = {
-			new enAndDecryption.sinus.Port(),
-			new enAndDecryption.primeNumbers.Port()
+	@SuppressWarnings("rawtypes")
+	private static final Port[] ci = {
+			new enAndDecryption.Port<enAndDecryption.charByChar.Crypto>(new Encryption(), new Decrypt(), new enAndDecryption.charByChar.Crypto()),
+			new enAndDecryption.Port<enAndDecryption.sinus.Crypto>(new Encryption(), new Decrypt(), new enAndDecryption.sinus.Crypto())
 	};
 	
 	private static final int LENGTH = ci.length;

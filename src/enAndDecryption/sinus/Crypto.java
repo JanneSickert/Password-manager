@@ -1,6 +1,9 @@
 package enAndDecryption.sinus;
 
-abstract class Crypto {
+import enAndDecryption.abstractClasses.AbstractCalculator;
+import enAndDecryption.abstractClasses.AbstractCrypto;
+
+public class Crypto extends AbstractCrypto{
 	
 	protected final char MAX_CHAR_INDEX = 65535;
 	
@@ -17,10 +20,9 @@ abstract class Crypto {
 		double sin = Math.sin(erg);
 		return sin;
 	}
-	
-	protected abstract char calculate(char a, char b);
-	
-	char[] crypt(char[] text, char[] key) {
+
+	@Override
+	public char[] crypt(char[] text, char[] key, AbstractCalculator calculator) {
 		int len = text.length;
 		char[] summant = new char[len], crypted = new char[len];
 		double sin = makeKeyToPin(key);
@@ -35,7 +37,7 @@ abstract class Crypto {
 			}
 		}
 		for (int k = 0; k < len; k++) {
-			crypted[k] = calculate(text[k], summant[k]);
+			crypted[k] = calculator.addOrSub(text[k], summant[k]);
 		}
 		return crypted;
 	}

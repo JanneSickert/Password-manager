@@ -22,7 +22,6 @@ public class PasswortManager {
 	public static void main(String[] args) {
 		p("Start password manager");
 		p("Prime numbers are calculated. This could take a couple of seconds");
-		enAndDecryption.primeNumbers.FindPrimes.startFindPrimes();
 		start();
 	}
 
